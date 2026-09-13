@@ -1,0 +1,80 @@
+@if (listing) {
+  <h1>{{ listing.title }}</h1>
+
+  <div class="card">
+    @if (listing.image) {
+      <img [src]="listing.image" class="big" />
+    }
+    <p>{{ listing.description }}</p>
+    <p class="price">{{ listing.price }} ₿</p>
+    <p class="muted">Verkäufer: {{ listing.seller_name }}</p>
+    <span class="badge">{{ listing.status }}</span>
+  </div>
+
+  @if (error) {
+    <p class="error">{{ error }}</p>
+  }
+  @if (message) {
+    <p class="success">{{ message }}</p>
+  }
+
+  @if (!auth.isLoggedIn()) {
+    <p class="muted">Bitte einloggen, um zu kaufen oder zu bieten.</p>
+  }
+
+  @if (auth.isLoggedIn() && !isSeller() && listing.status === 'ACTIVE') {
+    <div class="card">
+      <h3>Sofort kaufen</h3>
+      <button (click)="buy()">Für {{ listing.price }} ₿ kaufen</button>
+    </div>
+
+    <div class="card">
+      <h3>Preis vorschlagen</h3>
+      <form (ngSubmit)="makeOffer()">
+        <label>Dein Preis</label>
+        <input type="number" [(ngModel)]="offerPrice" name="offerPrice" />
+
+        <label>Nachricht an den Verkäufer</label>
+        <input [(ngModel)]="offerMessage" name="offerMessage" placeholder="z.B. Würdest du 200 nehmen?" />
+
+        <button type="submit">Angebot senden</button>
+      </form>
+    </div>
+  }
+
+  @if (isSeller()) {
+    <div class="card">
+      <h3>Angebote auf deinen Artikel</h3>
+
+      @if (offers.length === 0) {
+        <p class="muted">Noch keine Angebote.</p>
+      } @else {
+        <table>
+          <tr>
+            <th>Käufer</th>
+            <th>Preis</th>
+            <th>Nachricht</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+          @for (offer of offers; track offer.id) {
+            <tr>
+              <td>{{ offer.buyer_name }}</td>
+              <td class="price-cell">{{ offer.price }} ₿</td>
+              <td>{{ offer.message }}</td>
+              <td>{{ offer.status }}</td>
+              <td>
+                @if (offer.status === 'OPEN') {
+                  <button (click)="accept(offer)">Annehmen</button>
+                  <button class="secondary" (click)="reject(offer)">Ablehnen</button>
+                }
+              </td>
+            </tr>
+          }
+        </table>
+      }
+    </div>
+
+    <button class="danger" (click)="remove()">Anzeige löschen</button>
+  }
+}

@@ -1,0 +1,8 @@
+.form-card { max-width: 520px; }
+
+.preview {
+  max-width: 200px;
+  border-radius: 8px;
+  margin-bottom: 14px;
+  display: block;
+}

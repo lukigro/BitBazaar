@@ -1,0 +1,142 @@
+@if (!auth.isLoggedIn()) {
+  <p class="muted">Bitte zuerst einloggen.</p>
+} @else {
+  <h1>Profil von {{ auth.user.username }}</h1>
+
+  <div class="card balance-card">
+    <span class="muted">Kontostand</span>
+    <h2>{{ auth.user.balance }} ₿</h2>
+  </div>
+
+  @if (error) {
+    <p class="error">{{ error }}</p>
+  }
+
+  <div class="card">
+    <h3>Mein Inventar</h3>
+    @if (inventory.length === 0) {
+      <p class="muted">Du besitzt noch nichts. Kauf dir etwas auf dem Marktplatz.</p>
+    } @else {
+      <table>
+        <tr>
+          <th>Artikel</th>
+          <th>Gekauft von</th>
+          <th>Bezahlt</th>
+          <th>Weiterverkaufen</th>
+        </tr>
+        @for (item of inventory; track item.id) {
+          <tr>
+            <td>
+              @if (item.image) {
+                <img [src]="item.image" class="thumb" />
+              }
+              {{ item.title }}
+            </td>
+            <td class="muted">{{ item.bought_from }}</td>
+            <td>{{ item.price }} ₿</td>
+            <td>
+              <div class="resell">
+                <input type="number" [(ngModel)]="item.newPrice" [name]="'price' + item.id"
+                       placeholder="Preis" />
+                <button (click)="relist(item)">Anbieten</button>
+              </div>
+            </td>
+          </tr>
+        }
+      </table>
+    }
+  </div>
+
+  <div class="card">
+    <h3>Meine Anzeigen</h3>
+    @if (myListings.length === 0) {
+      <p class="muted">Keine Anzeigen.</p>
+    } @else {
+      <table>
+        @for (listing of myListings; track listing.id) {
+          <tr>
+            <td><a [routerLink]="['/market', listing.id]">{{ listing.title }}</a></td>
+            <td>{{ listing.price }} ₿</td>
+            <td><span class="badge">{{ listing.status }}</span></td>
+          </tr>
+        }
+      </table>
+    }
+  </div>
+
+  <div class="card">
+    <h3>Meine Angebote</h3>
+    @if (myOffers.length === 0) {
+      <p class="muted">Keine Angebote gesendet.</p>
+    } @else {
+      <table>
+        @for (offer of myOffers; track offer.id) {
+          <tr>
+            <td>{{ offer.listing_title }}</td>
+            <td>{{ offer.price }} ₿</td>
+            <td><span class="badge">{{ offer.status }}</span></td>
+          </tr>
+        }
+      </table>
+    }
+  </div>
+
+  <div class="card">
+    <h3>Letzte Spiele</h3>
+    @if (rounds.length === 0) {
+      <p class="muted">Noch nicht gespielt.</p>
+    } @else {
+      <table>
+        <tr>
+          <th>Spiel</th>
+          <th>Einsatz</th>
+          <th>Ergebnis</th>
+          <th>Gewinn</th>
+        </tr>
+        @for (round of rounds; track round.id) {
+          <tr>
+            <td>{{ round.game }}</td>
+            <td>{{ round.bet }} ₿</td>
+            <td>{{ round.result }}</td>
+            <td [class.plus]="round.payout > 0">{{ round.payout }} ₿</td>
+          </tr>
+        }
+      </table>
+    }
+  </div>
+
+  <div class="card">
+    <h3>Kontobewegungen</h3>
+    <table>
+      <tr>
+        <th>Typ</th>
+        <th>Betrag</th>
+        <th>Kontostand</th>
+        <th>Info</th>
+      </tr>
+      @for (transaction of transactions; track transaction.id) {
+        <tr>
+          <td>{{ transaction.type }}</td>
+          <td [class.plus]="transaction.amount > 0" [class.minus]="transaction.amount < 0">
+            {{ transaction.amount }}
+          </td>
+          <td>{{ transaction.balance_after }}</td>
+          <td class="muted">{{ transaction.info }}</td>
+        </tr>
+      }
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Bestenliste</h3>
+    <table>
+      @for (user of leaderboard; track user.id) {
+        <tr>
+          <td>{{ $index + 1 }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.balance }} ₿</td>
+        </tr>
+      }
+    </table>
+  </div>
+}

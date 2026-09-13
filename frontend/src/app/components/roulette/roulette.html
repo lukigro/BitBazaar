@@ -1,0 +1,49 @@
+<h1>Roulette</h1>
+
+@if (!auth.isLoggedIn()) {
+  <p class="muted">Bitte zuerst einloggen.</p>
+} @else {
+  <div class="card table">
+    <div
+      class="result"
+      [class.red]="played && resultColor === 'red'"
+      [class.black]="played && resultColor === 'black'"
+      [class.green]="played && resultColor === 'green'"
+      [class.spinning]="spinning">
+      {{ resultNumber }}
+    </div>
+
+    @if (played && won) {
+      <p class="success pop">Gewinn: {{ payout }} ₿</p>
+    }
+    @if (played && !won) {
+      <p class="error">Leider verloren.</p>
+    }
+    @if (error) {
+      <p class="error">{{ error }}</p>
+    }
+
+    <form (ngSubmit)="play()">
+      <label>Einsatz</label>
+      <input type="number" [(ngModel)]="bet" name="bet" />
+
+      <label>Wette</label>
+      <select [(ngModel)]="choice" name="choice">
+        <option value="red">Rot (2x)</option>
+        <option value="black">Schwarz (2x)</option>
+        <option value="even">Gerade (2x)</option>
+        <option value="odd">Ungerade (2x)</option>
+        <option value="number">Einzelne Zahl (36x)</option>
+      </select>
+
+      @if (choice === 'number') {
+        <label>Zahl 0 bis 36</label>
+        <input type="number" [(ngModel)]="numberChoice" name="numberChoice" min="0" max="36" />
+      }
+
+      <button type="submit" [disabled]="spinning">
+        {{ spinning ? 'Dreht...' : 'Drehen' }}
+      </button>
+    </form>
+  </div>
+}

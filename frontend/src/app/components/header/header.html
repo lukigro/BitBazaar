@@ -1,0 +1,29 @@
+<nav>
+  <a class="logo" routerLink="/market">
+    <img class="coin" src="favicon.svg" alt="BitBazaar" />
+    <span>BitBazaar</span>
+  </a>
+
+  <div class="links">
+    <a routerLink="/market" routerLinkActive="active">Marktplatz</a>
+    <a routerLink="/sell" routerLinkActive="active">Verkaufen</a>
+    <a routerLink="/slots" routerLinkActive="active">Slots</a>
+    <a routerLink="/roulette" routerLinkActive="active">Roulette</a>
+    <a routerLink="/profile" routerLinkActive="active">Profil</a>
+  </div>
+
+  <div class="right">
+    <button class="icon" (click)="theme.toggle()" title="Theme wechseln">
+      {{ theme.dark ? '☀' : '☾' }}
+    </button>
+
+    @if (auth.isLoggedIn()) {
+      <span class="balance">{{ auth.user.balance }} ₿</span>
+      <span class="name">{{ auth.user.username }}</span>
+      <button class="secondary" (click)="logout()">Logout</button>
+    } @else {
+      <a class="btn-link" routerLink="/login">Login</a>
+      <a class="btn-link solid" routerLink="/register">Registrieren</a>
+    }
+  </div>
+</nav>

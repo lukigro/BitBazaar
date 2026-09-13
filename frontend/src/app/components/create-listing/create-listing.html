@@ -1,0 +1,33 @@
+<h1>Artikel verkaufen</h1>
+
+@if (!auth.isLoggedIn()) {
+  <p class="muted">Bitte zuerst einloggen.</p>
+} @else {
+  <div class="card form-card">
+    @if (error) {
+      <p class="error">{{ error }}</p>
+    }
+
+    <form (ngSubmit)="save()">
+      <label>Titel</label>
+      <input [(ngModel)]="title" name="title" />
+
+      <label>Beschreibung</label>
+      <textarea [(ngModel)]="description" name="description" rows="4"></textarea>
+
+      <label>Preis in ₿</label>
+      <input type="number" [(ngModel)]="price" name="price" />
+
+      <label>Bild</label>
+      <input type="file" accept="image/*" (change)="onFileSelected($event)" />
+
+      @if (image) {
+        <img [src]="image" class="preview" />
+      }
+
+      <div>
+        <button type="submit">Anzeige erstellen</button>
+      </div>
+    </form>
+  </div>
+}

@@ -1,0 +1,27 @@
+<div class="auth-box">
+  <div class="card">
+    <h1>Konto erstellen</h1>
+    <p class="muted">Jedes neue Konto startet mit 1000 ₿.</p>
+
+    @if (error) {
+      <p class="error">{{ error }}</p>
+    }
+
+    <form (ngSubmit)="register()">
+      <label>Benutzername</label>
+      <input [(ngModel)]="username" name="username" autocomplete="username" />
+
+      <label>Passwort</label>
+      <input type="password" [(ngModel)]="password" name="password" autocomplete="new-password" />
+
+      <label>Passwort wiederholen</label>
+      <input type="password" [(ngModel)]="password2" name="password2" autocomplete="new-password" />
+
+      <button type="submit" [disabled]="loading">Registrieren</button>
+    </form>
+
+    <p class="switch">
+      Schon ein Konto? <a routerLink="/login">Hier einloggen</a>
+    </p>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<h1>Slots</h1>
+
+@if (!auth.isLoggedIn()) {
+  <p class="muted">Bitte zuerst einloggen.</p>
+} @else {
+  <div class="card machine">
+    <div class="reels">
+      @for (reel of reels; track $index) {
+        <span class="reel" [class.spinning]="spinning" [class.win]="played && won">
+          {{ symbols[reel] }}
+        </span>
+      }
+    </div>
+
+    @if (played && won) {
+      <p class="success pop">Gewinn: {{ payout }} ₿</p>
+    }
+    @if (played && !won) {
+      <p class="error">Leider verloren.</p>
+    }
+    @if (error) {
+      <p class="error">{{ error }}</p>
+    }
+
+    <form (ngSubmit)="spin()">
+      <label>Einsatz</label>
+      <input type="number" [(ngModel)]="bet" name="bet" />
+      <button type="submit" [disabled]="spinning">
+        {{ spinning ? 'Dreht...' : 'Drehen' }}
+      </button>
+    </form>
+
+    <p class="rules">3 gleiche Symbole: 10x Einsatz &nbsp;·&nbsp; 2 gleiche: Einsatz zurück</p>
+  </div>
+}

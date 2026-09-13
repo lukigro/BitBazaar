@@ -1,0 +1,39 @@
+a.tile {
+  color: var(--text);
+  text-decoration: none;
+  display: block;
+  transition: transform 0.15s, border-color 0.15s;
+}
+
+a.tile:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+}
+
+a.tile img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.tile h3 {
+  margin: 12px 0 6px 0;
+  font-size: 16px;
+}
+
+.price {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 17px;
+  margin: 0 0 4px 0;
+}
+
+.seller {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 0;
+}
+
+.search-row { display: flex; gap: 10px; align-items: center; }
+.search-row input { margin-bottom: 0; }

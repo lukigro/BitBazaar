@@ -1,0 +1,25 @@
+# Abhängigkeiten
+node_modules/
+
+# Datenbank (wird beim ersten Start automatisch erzeugt)
+*.db
+*.db-journal
+*.sqlite
+
+# Build-Ausgaben
+dist/
+.angular/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor und Betriebssystem
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Umgebungsvariablen
+.env
+.env.local

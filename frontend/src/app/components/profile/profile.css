@@ -1,0 +1,32 @@
+.plus { color: var(--success); font-weight: 600; }
+.minus { color: var(--danger); font-weight: 600; }
+
+a { color: var(--accent); }
+
+.balance-card h2 {
+  font-size: 34px;
+  color: var(--accent);
+  margin: 4px 0 0 0;
+}
+
+.thumb {
+  width: 34px;
+  height: 34px;
+  object-fit: cover;
+  border-radius: 5px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.resell {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.resell input {
+  margin-bottom: 0;
+  width: 100px;
+}
+
+.resell button { margin: 0; }

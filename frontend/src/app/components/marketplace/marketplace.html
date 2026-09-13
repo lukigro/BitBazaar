@@ -1,0 +1,26 @@
+<h1>Marktplatz</h1>
+
+<div class="card">
+  <div class="search-row">
+    <input [(ngModel)]="search" name="search" placeholder="Artikel suchen..." (keyup)="load()" />
+  </div>
+</div>
+
+@if (listings.length === 0) {
+  <p class="muted">Keine Angebote gefunden.</p>
+}
+
+<div class="grid">
+  @for (listing of listings; track listing.id) {
+    <a class="card tile" [routerLink]="['/market', listing.id]">
+      @if (listing.image) {
+        <img [src]="listing.image" />
+      } @else {
+        <div class="no-image">Kein Bild</div>
+      }
+      <h3>{{ listing.title }}</h3>
+      <p class="price">{{ listing.price }} ₿</p>
+      <p class="seller">von {{ listing.seller_name }}</p>
+    </a>
+  }
+</div>
