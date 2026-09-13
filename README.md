@@ -126,5 +126,3 @@ POST   /api/rounds                   eine Spielrunde (slots oder roulette)
 
 Antwortformat: Erfolg `{ "data": ... }`, Fehler
 `{ "error": { "status": 400, "message": "..." } }`.
-
-Ausführliche Begründung der Entwurfsentscheidungen in [DESIGN.md](DESIGN.md).
